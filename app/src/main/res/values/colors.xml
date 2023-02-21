@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#202429</color>
+    <color name="purple_500">#202429</color>
+    <color name="purple_700">#202429</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="spacex_blue">#005288</color>
+    <color name="spacex_black">#202429</color>
+    <color name="spacex_white">#C0C0C0</color>
+    <color name="spacex_gray">#A7A9AC</color>
+    <color name="spacex_black_letter">#051120</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black_x">#FF000000</color>
+</resources>

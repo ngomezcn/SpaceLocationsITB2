@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/MapFragment">
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="com.example.spacelocations.fragments.LoginFragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/login_to_register"
+            app:destination="@id/RegisterFragment" />
+        <action
+            android:id="@+id/login_to_map"
+            app:destination="@id/MapFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="com.example.spacelocations.fragments.RegisterFragment"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/register_to_login"
+            app:destination="@id/LoginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MapFragment"
+        android:name="com.example.spacelocations.fragments.MapFragment"
+        tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/map_to_addmarker"
+            app:destination="@id/AddMarkerFragment" />
+        <action
+            android:id="@+id/map_to_recycler"
+            app:destination="@id/ReyclerViewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AddMarkerFragment"
+        android:name="com.example.spacelocations.fragments.AddMarkerFragment"
+        tools:layout="@layout/fragment_add_marker">
+        <action
+            android:id="@+id/addmarker_to_map"
+            app:destination="@id/MapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ReyclerViewFragment"
+        android:name="com.example.spacelocations.fragments.RecyclerFragment"
+        tools:layout="@layout/fragment_recycler">
+        <action
+            android:id="@+id/recycler_to_map"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/recycler_to_detail"
+            app:destination="@id/DetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetailFragment"
+        android:name="com.example.spacelocations.fragments.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+    </fragment>
+</navigation>

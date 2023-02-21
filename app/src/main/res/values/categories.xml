@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Lift Off</item>
+        <item>Primary Stage</item>
+        <item>Secondary Stage</item>
+    </string-array>
+</resources>

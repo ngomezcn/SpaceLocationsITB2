@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/spacex_black"
+    tools:context=".fragments.AddMarkerFragment">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/cameraView"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="false"
+
+        app:layout_constraintTop_toBottomOf="@id/cameraView"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingLeft="45dp"
+            android:paddingRight="45dp"
+            android:paddingTop="15dp"
+            android:orientation="vertical"
+
+            app:layout_constraintTop_toBottomOf="@id/badge_ImageView"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <EditText
+                android:id="@+id/title_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Title"
+                android:paddingStart="15dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="@id/title_edit_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/description_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:entries="@array/categories"
+                android:lines="10"
+                android:minLines="5"
+                android:gravity="top|left"
+                android:maxLines="15"
+
+                android:layout_marginTop="20dp"
+                android:paddingStart="15dp"
+
+                app:layout_constraintStart_toStartOf="@+id/title_edit_text"
+                app:layout_constraintTop_toBottomOf="@+id/title_edit_text"
+                app:layout_constraintEnd_toEndOf="@+id/title_edit_text"
+                tools:ignore="RtlSymmetry" />
+
+            <Spinner
+                android:id="@+id/categoriesSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/categories"
+                android:textColor="@color/spacex_black"
+                android:paddingStart="15dp"
+                android:layout_marginTop="30dp"
+
+                app:layout_constraintStart_toStartOf="@+id/title_edit_text"
+                app:layout_constraintTop_toBottomOf="@+id/description_edit_text"
+                app:layout_constraintEnd_toEndOf="@+id/title_edit_text" />
+
+            <Button
+                android:id="@+id/camera_capture_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="Add marker"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:drawablePadding="50dp"
+                android:textAllCaps="false"
+
+                android:background="@color/spacex_black"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/categoriesSpinner" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
