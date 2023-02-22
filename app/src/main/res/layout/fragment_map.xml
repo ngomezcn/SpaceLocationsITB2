@@ -43,22 +43,21 @@
             android:background="@color/black"/>
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".fragments.AddMarkerFragment">
 
         <ImageView
-            android:id="@+id/myLocationBtn"
+            android:id="@+id/myLocationBtnTest"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="15dp"
+            android:layout_margin="15dp"
             android:src="@drawable/ic_my_location"
+            android:visibility="invisible"
 
-            app:layout_constraintBottom_toBottomOf="@+id/reyclerButton"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/reyclerButton"
@@ -67,7 +66,7 @@
             android:layout_margin="15dp"
             android:src="@drawable/ic_list"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <Button
             android:id="@+id/addMarkerButton"
@@ -80,7 +79,7 @@
             android:backgroundTint="@color/spacex_black"
 
             android:layout_marginBottom="60dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -95,9 +94,8 @@
             android:backgroundTint="@color/spacex_black"
 
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -59,6 +59,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 binding.nextAddMarker.visibility = View.VISIBLE;
                 binding.crossAim1.visibility = View.VISIBLE;
                 binding.crossAim2.visibility = View.VISIBLE;
+                binding.myLocationBtnTest.visibility = View.VISIBLE
+
+                binding.myLocationBtnTest.visibility = View.VISIBLE;
 
                 binding.nextAddMarker.setOnClickListener {
                     viewModel.selectedPosition.postValue(Position(latitude = map.cameraPosition.target.latitude, longitude = map.cameraPosition.target.longitude))
@@ -82,7 +85,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         })
 
-        binding.myLocationBtn.setOnClickListener {
+        binding.myLocationBtnTest.setOnClickListener {
             val latLng = LatLng( 40.416751 ,-3.703832)
             val zoom : Float = 15.0f
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
