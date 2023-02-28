@@ -32,7 +32,6 @@ import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.random.Random
 
 class AddMarkerFragment : Fragment() {
     lateinit var binding: FragmentAddMarkerBinding
@@ -118,6 +117,9 @@ class AddMarkerFragment : Fragment() {
 
                     viewModel.addMarker(marker)
                     println(savedUri)
+
+
+
                     findNavController().navigate(R.id.addmarker_to_map)
                 }
             })
