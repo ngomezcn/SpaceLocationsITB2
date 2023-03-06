@@ -1,6 +1,5 @@
 package com.example.spacelocations
 
-
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -10,7 +9,9 @@ import androidx.navigation.findNavController
 import com.example.spacelocations.databinding.ActivityMainBinding
 import com.example.spacelocations.viewmodel.ViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import io.realm.kotlin.mongodb.App
 
+lateinit var app: App
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
