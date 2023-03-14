@@ -43,10 +43,22 @@ class RealmManager{
             }
             .waitForInitialRemoteData()
             .build()
+        /*val config = SyncConfiguration.Builder(user, setOf(MarkerRealm::class))
+            .initialSubscriptions { realm ->
+                add(
+                    realm.query<MarkerRealm>(),
+                    "All Items"
+                )
+            }
+            .waitForInitialRemoteData()
+            .build()*/
         realm = Realm.open(config)
         realm!!.subscriptions.waitForSynchronization()
 
-
         ServiceLocator.configureRealm()
+    }
+
+    suspend fun logout() {
+        realmApp.currentUser?.logOut()
     }
 }

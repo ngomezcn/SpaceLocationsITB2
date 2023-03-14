@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/menu_gnav" >
+        <item android:title="Map"
+            android:icon="@drawable/ic_map"
+            android:id="@+id/menu_MapFragment"/>
+        <item android:title="List"
+            android:icon="@drawable/ic_list_menu"
+            android:id="@+id/menu_ReyclerViewFragment"/>
+    </group>
+
+    <group android:id="@+id/menu_gcat" >
+        <item
+            android:id="@+id/allCat"
+            android:enabled="true"
+            android:icon="@drawable/ic_all"
+            android:title="All"/>
+        <item
+            android:id="@+id/lifOff"
+            android:enabled="true"
+            android:icon="@drawable/rocket_lift_off"
+            android:title="Lift Off"/>
+        <item
+            android:id="@+id/primaryStage"
+            android:enabled="true"
+            android:icon="@drawable/rocket_first"
+            android:title="Primary Stage"/>
+        <item
+            android:id="@+id/secondaryStage"
+            android:enabled="true"
+            android:icon="@drawable/globe_americas"
+            android:title="Secondary stage"/>
+    </group>
+</menu>

@@ -53,7 +53,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.addMarkerButton.setOnClickListener {
             if(viewModel.mBinding.value != null)
             {
-                viewModel.mBinding.value!!.bottomNavigation.visibility = View.GONE;
+                //viewModel.mBinding.value!!.bottomNavigation.visibility = View.GONE;
                 binding.reyclerButton.visibility = View.GONE;
                 binding.addMarkerButton.visibility = View.GONE;
                 binding.nextAddMarker.visibility = View.VISIBLE;

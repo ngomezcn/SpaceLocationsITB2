@@ -116,9 +116,9 @@ class AddMarkerFragment : Fragment() {
                         )
 
                     viewModel.addMarker(marker)
+                    //viewModel.insertItem("asd")
+                    viewModel.insertMarker(marker)
                     println(savedUri)
-
-
 
                     findNavController().navigate(R.id.addmarker_to_map)
                 }

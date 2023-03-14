@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.spacelocations.Categories
 import com.example.spacelocations.ServiceLocator
+import com.example.spacelocations.ServiceLocator.itemsDao
 import com.example.spacelocations.databinding.ActivityMainBinding
 import com.example.spacelocations.models.Position.MarkerModel
 import com.example.spacelocations.models.Position.Position
@@ -26,7 +27,7 @@ class ViewModel : ViewModel() {
     var selectedPosition = MutableLiveData<Position>()
     var mBinding = MutableLiveData<ActivityMainBinding>()
     val loggedIn = MutableLiveData<Boolean>(false)
-
+    val user = MutableLiveData<Boolean>(false)
     fun categoryFilter()
     {
         var result = mutableListOf<MarkerModel>()
@@ -71,4 +72,30 @@ class ViewModel : ViewModel() {
             loggedIn.postValue(true)
         }
     }
+
+    fun login(email: String, password: String){
+        CoroutineScope(Dispatchers.IO).launch{
+            ServiceLocator.realmManager.login(email, password)
+            ServiceLocator.configureRealm()
+            loggedIn.postValue(true)
+        }
+    }
+
+    fun logout()
+    {
+        CoroutineScope(Dispatchers.IO).launch{
+            ServiceLocator.realmManager.logout()
+            loggedIn.postValue(false)
+        }
+    }
+
+    fun insertMarker(marker : MarkerModel)
+    {
+        itemsDao.insertMarker(marker)
+    }
+
+    /*fun insertItem(text: String)
+    {
+        itemsDao.insertItem(text)
+    }*/
 }

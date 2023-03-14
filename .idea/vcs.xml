@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="/dades/NGOMEZ/ITB/SpaceLocations/SpaceLocationsITB" vcs="Git" />
+    <mapping directory="/dades/NGOMEZ/M09_/SpaceLocationsITB2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>
