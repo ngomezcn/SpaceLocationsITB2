@@ -5,10 +5,12 @@ import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
 import android.location.Criteria
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -17,6 +19,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.spacelocations.Categories
 import com.example.spacelocations.R
 import com.example.spacelocations.databinding.FragmentMapBinding
 import com.example.spacelocations.models.Position.MarkerModel
@@ -30,6 +33,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import java.time.temporal.TemporalQueries.precision
+import java.util.*
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -53,6 +57,24 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.addMarkerButton.setOnClickListener {
             if(viewModel.mBinding.value != null)
             {
+                //ESTO ES SOLO PARA TESTEAR
+
+                val marker =
+                    MarkerModel(
+                        Position(41.4534227,2.1841046),
+                        //Position(Random.nextDouble(0.0, 40.0), Random.nextDouble(0.0, 40.0)),
+                        "asd",
+                        "asd",
+                        Calendar.getInstance().time.toString(),
+                        Uri.parse("savedUri"),
+                        Categories.LifOff
+                    )
+
+                viewModel.insertMarker(marker)
+    Toast.makeText(activity, "WTF", Toast.LENGTH_SHORT).show()
+/*
+
+
                 //viewModel.mBinding.value!!.bottomNavigation.visibility = View.GONE;
                 binding.reyclerButton.visibility = View.GONE;
                 binding.addMarkerButton.visibility = View.GONE;
@@ -66,7 +88,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 binding.nextAddMarker.setOnClickListener {
                     viewModel.selectedPosition.postValue(Position(latitude = map.cameraPosition.target.latitude, longitude = map.cameraPosition.target.longitude))
                     findNavController().navigate(R.id.map_to_addmarker)
-                }
+                }*/
             }
         }
 

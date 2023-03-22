@@ -1,5 +1,6 @@
 package com.example.spacelocations.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,10 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.spacelocations.Categories
 import com.example.spacelocations.R
 import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.databinding.FragmentLoginBinding
+import com.example.spacelocations.models.Position.MarkerModel
 import com.example.spacelocations.viewmodel.ViewModel
+import java.util.*
 
 class LoginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
@@ -39,6 +43,7 @@ class LoginFragment : Fragment() {
         //viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.loggedIn.observe(viewLifecycleOwner){
             if(it){
+
                 findNavController().navigate(R.id.login_to_splash)
             }
         }
