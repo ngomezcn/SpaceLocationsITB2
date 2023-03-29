@@ -2,8 +2,8 @@ package dev.mateuy.realmsample.daos
 
 import com.example.spacelocations.models.Position.MarkerModel
 import com.example.spacelocations.realms.Item
-import com.google.android.gms.maps.model.Marker
 import io.realm.kotlin.Realm
+import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
  */
 class ItemsDao(val realm: Realm, val userId: String){
 
-    //fun listFlow() : Flow<List<Item>> = realm.query<Item>().sort("summary", Sort.DESCENDING).find().asFlow().map { it.list.toList() }
+   // fun listFlow() : Flow<List<wtf>> = realm.query<wtf>().find().asFlow().map { it.list.toList() }
 
     /*fun insertItem(text : String){
         realm.writeBlocking {
@@ -20,13 +20,13 @@ class ItemsDao(val realm: Realm, val userId: String){
             copyToRealm(item)
         }
     }*/
+    fun listFlow() : Flow<List<Item>> = realm.query<Item>().find().asFlow().map { it.list.toList() }
 
-    fun insertMarker(m : MarkerModel){
-        realm.writeBlocking {
-            //val item = Item(summary = text, owner_id = userId)
-
+    fun insertMarker(m : MarkerModel) {
+       realm.writeBlocking {
             val marker = Item(
-                position = m.position,
+                longitude = m.position.longitude,
+                latitude = m.position.latitude,
                 title = m.title,
                 description = m.description,
                 date = m.date,

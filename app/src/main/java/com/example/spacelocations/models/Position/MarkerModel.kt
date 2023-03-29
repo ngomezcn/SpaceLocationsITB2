@@ -2,7 +2,6 @@ package com.example.spacelocations.models.Position
 
 import android.net.Uri
 import com.example.spacelocations.Categories
-import java.time.LocalDateTime
 
 data class MarkerModel(
     val position: Position,

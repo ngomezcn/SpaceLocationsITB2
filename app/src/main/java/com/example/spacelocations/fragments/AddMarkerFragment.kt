@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -23,12 +22,9 @@ import com.example.spacelocations.Categories
 import com.example.spacelocations.R
 import com.example.spacelocations.databinding.FragmentAddMarkerBinding
 import com.example.spacelocations.models.Position.MarkerModel
-import com.example.spacelocations.models.Position.Position
 import com.example.spacelocations.viewmodel.ViewModel
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -103,24 +99,18 @@ class AddMarkerFragment : Fragment() {
                         "Secondary Stage" -> category = Categories.SecondaryStage
                     }
 
-                    val marker =
+                   val marker =
                         MarkerModel(
                             viewModel.selectedPosition.value!!,
-                            // Position(41.4534227,2.1841046),
-                            //Position(Random.nextDouble(0.0, 40.0), Random.nextDouble(0.0, 40.0)),
                             binding.titleEditText.text.toString(),
                             binding.descriptionEditText.text.toString(),
                             Calendar.getInstance().time.toString(),
                             savedUri,
                             category!!
                         )
-
-                    viewModel.addMarker(marker)
-                    //viewModel.insertItem("asd")
-                    viewModel.insertMarker(marker)
-                    println(savedUri)
-
-                    findNavController().navigate(R.id.addmarker_to_map)
+                   viewModel.addMarker(marker)
+                   Thread.sleep(2_000)
+                   findNavController().navigate(R.id.addmarker_to_map)
                 }
             })
     }

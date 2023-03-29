@@ -27,7 +27,7 @@ class RegisterFragment : Fragment() {
         //viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.loggedIn.observe(viewLifecycleOwner){
             if(it){
-                findNavController().navigate(R.id.login_to_splash)
+                findNavController().navigate(R.id.register_to_login)
             }
         }
     }

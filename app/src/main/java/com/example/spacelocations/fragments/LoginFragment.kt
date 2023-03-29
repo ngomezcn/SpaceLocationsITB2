@@ -1,25 +1,20 @@
 package com.example.spacelocations.fragments
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.spacelocations.Categories
 import com.example.spacelocations.R
 import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.databinding.FragmentLoginBinding
-import com.example.spacelocations.models.Position.MarkerModel
+import com.example.spacelocations.viewmodel.ListViewModel
 import com.example.spacelocations.viewmodel.ViewModel
-import java.util.*
 
 class LoginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding

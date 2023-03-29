@@ -11,7 +11,6 @@ import com.example.spacelocations.R
 import com.example.spacelocations.viewmodel.SplashViewModel
 
 class SplashFragment : Fragment() {
-
     companion object {
         fun newInstance() = SplashFragment()
     }
@@ -19,7 +18,7 @@ class SplashFragment : Fragment() {
     private lateinit var viewModel: SplashViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+        return   inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

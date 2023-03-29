@@ -12,25 +12,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-import io.realm.kotlin.Realm
-import io.realm.kotlin.RealmConfiguration
-import io.realm.kotlin.ext.query
-import io.realm.kotlin.types.ObjectId
-import io.realm.kotlin.types.RealmObject
-import io.realm.kotlin.types.annotations.PrimaryKey
-import java.util.*
 class ViewModel : ViewModel() {
     var displayMarkerList = MutableLiveData<List<MarkerModel>>(listOf())
-    private var rawMarkerList = MutableLiveData<MutableList<MarkerModel>>(mutableListOf())
+    var rawMarkerList = MutableLiveData<MutableList<MarkerModel>>(mutableListOf())
     var filterCategory = MutableLiveData<Categories?>(null)
     var detailMarker = MutableLiveData<MarkerModel>()
     var selectedPosition = MutableLiveData<Position>()
     var mBinding = MutableLiveData<ActivityMainBinding>()
     val loggedIn = MutableLiveData<Boolean>(false)
     val user = MutableLiveData<Boolean>(false)
+
     fun categoryFilter()
     {
         var result = mutableListOf<MarkerModel>()
+
 
         if(filterCategory.value == null)
         {
@@ -60,12 +55,6 @@ class ViewModel : ViewModel() {
         }
     }
 
-    fun addMarker(markerModel: MarkerModel)
-    {
-        rawMarkerList.value!!.add(markerModel)
-        categoryFilter()
-    }
-
     fun register(email: String, password: String){
         CoroutineScope(Dispatchers.IO).launch{
             ServiceLocator.realmManager.register(email, password)
@@ -89,13 +78,16 @@ class ViewModel : ViewModel() {
         }
     }
 
-    fun insertMarker(marker : MarkerModel)
+    fun addMarker(markerModel: MarkerModel)
+    {
+        //rawMarkerList.value!!.add(markerModel)
+        categoryFilter()
+        insertMarker(markerModel)
+    }
+
+    private fun insertMarker(marker : MarkerModel)
     {
         itemsDao.insertMarker(marker)
     }
-
-    /*fun insertItem(text: String)
-    {
-        itemsDao.insertItem(text)
-    }*/
 }
+

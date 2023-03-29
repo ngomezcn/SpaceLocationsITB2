@@ -1,29 +1,27 @@
 package com.example.spacelocations.fragments
 
 import android.Manifest
-import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
-import android.location.Criteria
-import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.spacelocations.Categories
 import com.example.spacelocations.R
+import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.databinding.FragmentMapBinding
+import com.example.spacelocations.realms.Item
 import com.example.spacelocations.models.Position.MarkerModel
 import com.example.spacelocations.models.Position.Position
+import com.example.spacelocations.viewmodel.ListViewModel
 import com.example.spacelocations.viewmodel.ViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -32,8 +30,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import java.time.temporal.TemporalQueries.precision
-import java.util.*
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -42,6 +38,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     lateinit var map: GoogleMap
     lateinit var mapFragment : SupportMapFragment
     lateinit var binding: FragmentMapBinding
+    private lateinit var listViewModel: ListViewModel
 
     companion object {
         private const val TAG = "CameraXBasic"
@@ -57,25 +54,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.addMarkerButton.setOnClickListener {
             if(viewModel.mBinding.value != null)
             {
-                //ESTO ES SOLO PARA TESTEAR
-
-                val marker =
-                    MarkerModel(
-                        Position(41.4534227,2.1841046),
-                        //Position(Random.nextDouble(0.0, 40.0), Random.nextDouble(0.0, 40.0)),
-                        "asd",
-                        "asd",
-                        Calendar.getInstance().time.toString(),
-                        Uri.parse("savedUri"),
-                        Categories.LifOff
-                    )
-
-                viewModel.insertMarker(marker)
-    Toast.makeText(activity, "WTF", Toast.LENGTH_SHORT).show()
-/*
-
-
-                //viewModel.mBinding.value!!.bottomNavigation.visibility = View.GONE;
                 binding.reyclerButton.visibility = View.GONE;
                 binding.addMarkerButton.visibility = View.GONE;
                 binding.nextAddMarker.visibility = View.VISIBLE;
@@ -88,7 +66,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 binding.nextAddMarker.setOnClickListener {
                     viewModel.selectedPosition.postValue(Position(latitude = map.cameraPosition.target.latitude, longitude = map.cameraPosition.target.longitude))
                     findNavController().navigate(R.id.map_to_addmarker)
-                }*/
+                }
             }
         }
 
@@ -126,6 +104,31 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
+    fun loadMarkersFromRealm(list : List<Item>)
+    {
+        for(i in list)
+        {
+            var abb = Categories.All
+            when(i.category)
+            {
+                Categories.All.toString() -> abb = Categories.All
+                Categories.LifOff.toString() -> abb = Categories.LifOff
+                Categories.PrimaryStage.toString() -> abb = Categories.PrimaryStage
+                Categories.SecondaryStage.toString() -> abb = Categories.SecondaryStage
+            }
+
+            val m = MarkerModel(Position(i.latitude, i.longitude), i.title, i.description, i.date, Uri.parse(i.photoUri), abb)
+
+            viewModel.rawMarkerList.value!!.add(m)
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
 
         if (ActivityCompat.checkSelfPermission(
@@ -146,7 +149,30 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         map = googleMap
 
-        loadMarkers()
+        listViewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+        listViewModel.items.observe(viewLifecycleOwner){list ->
+
+            loadMarkersFromRealm(list)
+            viewModel.categoryFilter()
+            loadMarkers()
+
+            //rawMarkerList.value!!.add(markerModel)
+
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println(list)
+            println(ServiceLocator.realmManager.realmApp.currentUser!!.id)
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
+        }
     }
     /*private fun isLocationPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -154,6 +180,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun loadMarkers()
     {
+        println(ServiceLocator.realmManager.realmApp.currentUser!!.id)
+
         if(viewModel.displayMarkerList.value != null)
         {
             for(m in viewModel.displayMarkerList.value!!.iterator()){

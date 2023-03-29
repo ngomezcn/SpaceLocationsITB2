@@ -8,4 +8,8 @@ enum class Categories(private val category: String) {
     override fun toString(): String {
         return category
     }
+    public fun fromString(s: String) : Categories
+    {
+        return LifOff
+    }
 }

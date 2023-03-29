@@ -1,7 +1,6 @@
 package com.example.spacelocations
 
 import dev.mateuy.realmsample.daos.ItemsDao
-import com.example.spacelocations.daos.RealmManager
 
 /**
  * Singleton with services

@@ -1,6 +1,5 @@
-package com.example.spacelocations.daos
+package com.example.spacelocations
 
-import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.realms.Item
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
