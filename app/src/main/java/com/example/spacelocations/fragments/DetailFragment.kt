@@ -43,6 +43,10 @@ class DetailFragment : Fragment() {
                 .into(binding.badgeImageView)
         }
 
+        binding.deleteBtn.setOnClickListener {
+            viewModel.deleteMarker(marker)
+        }
+
         return binding.root
     }
 }

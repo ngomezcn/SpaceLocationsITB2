@@ -23,6 +23,7 @@ import com.example.spacelocations.R
 import com.example.spacelocations.databinding.FragmentAddMarkerBinding
 import com.example.spacelocations.models.Position.MarkerModel
 import com.example.spacelocations.viewmodel.ViewModel
+import org.mongodb.kbson.ObjectId
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,7 +80,7 @@ class AddMarkerFragment : Fragment() {
     }
 
     private fun takePhoto() {
-        val imageCapture = imageCapture ?: return
+       /* val imageCapture = imageCapture ?: return
         val photoFile = File(outputDirectory,
             SimpleDateFormat(AddMarkerFragment.FILENAME_FORMAT, Locale.US
             ).format(System.currentTimeMillis()) + ".jpg")
@@ -112,7 +113,29 @@ class AddMarkerFragment : Fragment() {
                    Thread.sleep(2_000)
                    findNavController().navigate(R.id.addmarker_to_map)
                 }
-            })
+            })*/
+
+
+        var category: Categories? = null
+        when (binding.categoriesSpinner.selectedItem.toString()) {
+            "Lift Off" -> category = Categories.LifOff
+            "Primary Stage" -> category = Categories.PrimaryStage
+            "Secondary Stage" -> category = Categories.SecondaryStage
+        }
+
+        val marker =
+            MarkerModel(
+                null,
+                viewModel.selectedPosition.value!!,
+                binding.titleEditText.text.toString(),
+                binding.descriptionEditText.text.toString(),
+                Calendar.getInstance().time.toString(),
+                Uri.parse("google.com"),
+                category!!
+            )
+        viewModel.addMarker(marker)
+        Thread.sleep(2_000)
+        findNavController().navigate(R.id.addmarker_to_map)
     }
 
     override fun onDestroy() {

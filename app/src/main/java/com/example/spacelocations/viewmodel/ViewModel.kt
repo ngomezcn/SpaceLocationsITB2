@@ -26,7 +26,6 @@ class ViewModel : ViewModel() {
     {
         var result = mutableListOf<MarkerModel>()
 
-
         if(filterCategory.value == null)
         {
             result = rawMarkerList.value!!
@@ -73,6 +72,8 @@ class ViewModel : ViewModel() {
     fun logout()
     {
         CoroutineScope(Dispatchers.IO).launch{
+            filterCategory.postValue(null)
+            clear()
             ServiceLocator.realmManager.logout()
             loggedIn.postValue(false)
         }
@@ -88,6 +89,17 @@ class ViewModel : ViewModel() {
     private fun insertMarker(marker : MarkerModel)
     {
         itemsDao.insertMarker(marker)
+    }
+
+    fun deleteMarker(marker: MarkerModel)
+    {
+        itemsDao.delete(marker)
+    }
+
+    fun clear()
+    {
+        displayMarkerList.postValue(listOf())
+        rawMarkerList.postValue(mutableListOf())
     }
 }
 

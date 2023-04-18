@@ -117,7 +117,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 Categories.SecondaryStage.toString() -> abb = Categories.SecondaryStage
             }
 
-            val m = MarkerModel(Position(i.latitude, i.longitude), i.title, i.description, i.date, Uri.parse(i.photoUri), abb)
+            val m = MarkerModel(i._id, Position(i.latitude, i.longitude), i.title, i.description, i.date, Uri.parse(i.photoUri), abb)
 
             viewModel.rawMarkerList.value!!.add(m)
         }
@@ -125,8 +125,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -155,23 +153,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             loadMarkersFromRealm(list)
             viewModel.categoryFilter()
             loadMarkers()
-
             //rawMarkerList.value!!.add(markerModel)
-
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println(list)
-            println(ServiceLocator.realmManager.realmApp.currentUser!!.id)
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
-            println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTt")
         }
     }
     /*private fun isLocationPermissionGranted(): Boolean {
@@ -180,7 +162,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun loadMarkers()
     {
-        println(ServiceLocator.realmManager.realmApp.currentUser!!.id)
 
         if(viewModel.displayMarkerList.value != null)
         {
