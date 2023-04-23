@@ -1,22 +1,10 @@
-package com.example.spacelocations.realms
+package com.example.spacelocations
 
 import io.realm.kotlin.types.ObjectId
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
 
-/*open class Item(
-        @PrimaryKey
-        var _id: ObjectId = ObjectId.create(),
-        var complete: Boolean = false,
-        var summary: String = "",
-        var xd: String = "",
-        var owner_id: String = ""
-) : RealmObject {
-        // Declaring empty contructor
-        constructor() : this(owner_id = "") {}
-}*/
-
-open class Item(
+open class MarkerR(
         @PrimaryKey
         var _id: ObjectId = ObjectId.create(),
         var latitude: Double = -0.1,
@@ -24,7 +12,8 @@ open class Item(
         var title: String = "",
         var description: String = "",
         var date: String = "",
-        var photoUri: String = "",
+        //var photoUri: String = "",
+        var image: ByteArray? = null,
         var category: String = "",
         var owner_id: String = ""
 ) : RealmObject {

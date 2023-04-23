@@ -5,13 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.spacelocations.R
+import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.databinding.FragmentDetailBinding
 import com.example.spacelocations.databinding.FragmentLoginBinding
 import com.example.spacelocations.databinding.FragmentRegisterBinding
 import com.example.spacelocations.viewmodel.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
     lateinit var binding: FragmentRegisterBinding
@@ -39,7 +44,18 @@ class RegisterFragment : Fragment() {
             val username : String = binding.emailUser.text.toString()
             val email : String = binding.emailRegister.text.toString()
             val password : String = binding.emailPassword.text.toString()
-            viewModel.register(email,password) // i - 123456
+
+            CoroutineScope(Dispatchers.IO).launch{
+                try {
+                    ServiceLocator.realmManager.register(email, password)
+                    viewModel.loggedIn.postValue(true)
+                } catch (ex : Exception)
+                {
+                    activity?.runOnUiThread {
+                        Toast.makeText(activity, "Error: Email already registered", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 }

@@ -13,8 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.spacelocations.R
 import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.databinding.FragmentLoginBinding
-import com.example.spacelocations.viewmodel.ListViewModel
 import com.example.spacelocations.viewmodel.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
@@ -48,14 +50,22 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginButton.setOnClickListener{
-            try {
-                val email : String = binding.emailLogin.text.toString()
-                val password : String = binding.passwordLogin.text.toString()
-                viewModel.login(email,password) // i - 123456
-                ServiceLocator.configureRealm()
-            } catch (ex : Exception)
-            {
-                Toast.makeText(activity, "User and password F", Toast.LENGTH_SHORT).show()
+
+            val email : String = binding.emailLogin.text.toString()
+            val password : String = binding.passwordLogin.text.toString()
+
+            CoroutineScope(Dispatchers.IO).launch{
+                try {
+                    //viewModel.login(email, password)
+                    ServiceLocator.realmManager.login(email, password)
+                    ServiceLocator.configureRealm()
+                    viewModel.loggedIn.postValue(true)
+                } catch (ex : Exception)
+                {
+                    activity?.runOnUiThread {
+                        Toast.makeText(activity, "User and password incorrect", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

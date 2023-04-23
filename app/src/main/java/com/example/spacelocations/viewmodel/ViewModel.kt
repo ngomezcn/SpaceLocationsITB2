@@ -6,25 +6,28 @@ import com.example.spacelocations.Categories
 import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.ServiceLocator.itemsDao
 import com.example.spacelocations.databinding.ActivityMainBinding
-import com.example.spacelocations.models.Position.MarkerModel
 import com.example.spacelocations.models.Position.Position
+import com.example.spacelocations.MarkerR
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ViewModel : ViewModel() {
-    var displayMarkerList = MutableLiveData<List<MarkerModel>>(listOf())
-    var rawMarkerList = MutableLiveData<MutableList<MarkerModel>>(mutableListOf())
+    var displayMarkerList = MutableLiveData<List<MarkerR>>(listOf())
+    var rawMarkerList = MutableLiveData<MutableList<MarkerR>>(mutableListOf())
+
     var filterCategory = MutableLiveData<Categories?>(null)
-    var detailMarker = MutableLiveData<MarkerModel>()
+    var detailMarker = MutableLiveData<MarkerR>()
     var selectedPosition = MutableLiveData<Position>()
     var mBinding = MutableLiveData<ActivityMainBinding>()
     val loggedIn = MutableLiveData<Boolean>(false)
     val user = MutableLiveData<Boolean>(false)
 
+    val editMode = MutableLiveData<Boolean>(false)
+
     fun categoryFilter()
     {
-        var result = mutableListOf<MarkerModel>()
+        var result = mutableListOf<MarkerR>()
 
         if(filterCategory.value == null)
         {
@@ -33,7 +36,7 @@ class ViewModel : ViewModel() {
         {
             for(i in rawMarkerList.value!!.iterator())
             {
-                if(i.category == filterCategory.value)
+                if(i.category == filterCategory.value.toString())
                 {
                     result.add(i)
                 }
@@ -43,31 +46,7 @@ class ViewModel : ViewModel() {
         displayMarkerList.postValue(result)
     }
 
-    init {
-        fetchData()
-    }
 
-    private fun fetchData()
-    {
-        CoroutineScope(Dispatchers.Main).launch {
-
-        }
-    }
-
-    fun register(email: String, password: String){
-        CoroutineScope(Dispatchers.IO).launch{
-            ServiceLocator.realmManager.register(email, password)
-            loggedIn.postValue(true)
-        }
-    }
-
-    fun login(email: String, password: String){
-        CoroutineScope(Dispatchers.IO).launch{
-            ServiceLocator.realmManager.login(email, password)
-            ServiceLocator.configureRealm()
-            loggedIn.postValue(true)
-        }
-    }
 
     fun logout()
     {
@@ -79,21 +58,9 @@ class ViewModel : ViewModel() {
         }
     }
 
-    fun addMarker(markerModel: MarkerModel)
+    fun deleteMarker(marker: MarkerR)
     {
-        //rawMarkerList.value!!.add(markerModel)
-        categoryFilter()
-        insertMarker(markerModel)
-    }
-
-    private fun insertMarker(marker : MarkerModel)
-    {
-        itemsDao.insertMarker(marker)
-    }
-
-    fun deleteMarker(marker: MarkerModel)
-    {
-        itemsDao.delete(marker)
+        marker._id?.let { itemsDao.deleteItem(it) }
     }
 
     fun clear()

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.spacelocations.OnClickListener
 import com.example.spacelocations.adapter.RecyclerAdapter
 import com.example.spacelocations.databinding.FragmentRecyclerBinding
-import com.example.spacelocations.models.Position.MarkerModel
+import com.example.spacelocations.MarkerR
 import com.example.spacelocations.viewmodel.ViewModel
 
 class RecyclerFragment : Fragment(), OnClickListener {
@@ -49,7 +49,7 @@ class RecyclerFragment : Fragment(), OnClickListener {
         super.onResume()
     }
 
-    override fun onClick(marker: MarkerModel) {
+    override fun onClick(marker: MarkerR) {
         viewModel.detailMarker.postValue(marker)
 
         findNavController().navigate(com.example.spacelocations.R.id.recycler_to_detail)

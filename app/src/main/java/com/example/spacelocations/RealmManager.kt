@@ -1,6 +1,5 @@
 package com.example.spacelocations
 
-import com.example.spacelocations.realms.Item
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.log.LogLevel
@@ -14,7 +13,7 @@ import io.realm.kotlin.mongodb.sync.SyncConfiguration
  * Manages the realm app
  */
 class RealmManager{
-    val realmApp = App.create(AppConfiguration.Builder("application-0-ibiow").log(LogLevel.ALL).build())
+    val realmApp = App.create(AppConfiguration.Builder("application-0-vikce").log(LogLevel.ALL).build())
     var realm : Realm? = null
 
     fun loggedIn() = realmApp.currentUser?.loggedIn ?: false
@@ -33,10 +32,10 @@ class RealmManager{
         requireNotNull(realmApp.currentUser)
 
         val user = realmApp.currentUser!!
-        val config = SyncConfiguration.Builder(user, setOf(Item::class))
+        val config = SyncConfiguration.Builder(user, setOf(MarkerR::class))
             .initialSubscriptions { realm ->
                 add(
-                    realm.query<Item>(),
+                    realm.query<MarkerR>(),
                     "All Items"
                 )
             }

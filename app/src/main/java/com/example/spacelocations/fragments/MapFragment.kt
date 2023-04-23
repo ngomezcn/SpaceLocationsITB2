@@ -2,7 +2,6 @@ package com.example.spacelocations.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +13,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.spacelocations.Categories
 import com.example.spacelocations.R
-import com.example.spacelocations.ServiceLocator
 import com.example.spacelocations.databinding.FragmentMapBinding
-import com.example.spacelocations.realms.Item
-import com.example.spacelocations.models.Position.MarkerModel
+import com.example.spacelocations.MarkerR
 import com.example.spacelocations.models.Position.Position
 import com.example.spacelocations.viewmodel.ListViewModel
 import com.example.spacelocations.viewmodel.ViewModel
@@ -104,22 +100,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun loadMarkersFromRealm(list : List<Item>)
+    fun loadMarkersFromRealm(list : List<MarkerR>)
     {
-        for(i in list)
+        viewModel.rawMarkerList.value = mutableListOf()
+
+        for(marker : MarkerR in list)
         {
-            var abb = Categories.All
-            when(i.category)
-            {
-                Categories.All.toString() -> abb = Categories.All
-                Categories.LifOff.toString() -> abb = Categories.LifOff
-                Categories.PrimaryStage.toString() -> abb = Categories.PrimaryStage
-                Categories.SecondaryStage.toString() -> abb = Categories.SecondaryStage
-            }
-
-            val m = MarkerModel(i._id, Position(i.latitude, i.longitude), i.title, i.description, i.date, Uri.parse(i.photoUri), abb)
-
-            viewModel.rawMarkerList.value!!.add(m)
+            viewModel.rawMarkerList.value!!.add(marker)
         }
     }
 
@@ -142,13 +129,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 MapFragment.REQUIRED_PERMISSIONS,
                 MapFragment.REQUEST_CODE_PERMISSIONS
             )
-            return
         }
 
         map = googleMap
 
         listViewModel = ViewModelProvider(this).get(ListViewModel::class.java)
-        listViewModel.items.observe(viewLifecycleOwner){list ->
+        listViewModel.items.observe(viewLifecycleOwner){ list ->
 
             loadMarkersFromRealm(list)
             viewModel.categoryFilter()
@@ -156,13 +142,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             //rawMarkerList.value!!.add(markerModel)
         }
     }
-    /*private fun isLocationPermissionGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-    }*/
 
     private fun loadMarkers()
     {
-
         if(viewModel.displayMarkerList.value != null)
         {
             for(m in viewModel.displayMarkerList.value!!.iterator()){
@@ -171,8 +153,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun createMarker(marker: MarkerModel){
-        val coordinates = LatLng(marker.position.latitude, marker.position.longitude)
+    private fun createMarker(marker: MarkerR){
+        val coordinates = LatLng(marker.latitude, marker.longitude)
         val myMarker = MarkerOptions().position(coordinates).title(marker.title)
         map.addMarker(myMarker)
         //map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 18f), 5000, null)

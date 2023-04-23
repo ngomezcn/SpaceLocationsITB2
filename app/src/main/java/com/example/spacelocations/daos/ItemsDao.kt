@@ -1,16 +1,11 @@
 package dev.mateuy.realmsample.daos
 
-import com.example.spacelocations.models.Position.MarkerModel
-import com.example.spacelocations.realms.Item
+import com.example.spacelocations.MarkerR
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
-import io.realm.kotlin.query.RealmResults
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import io.realm.kotlin.types.ObjectId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import org.mongodb.kbson.ObjectId
 
 
 /**
@@ -18,62 +13,38 @@ import org.mongodb.kbson.ObjectId
  */
 class ItemsDao(val realm: Realm, val userId: String){
 
-   // fun listFlow() : Flow<List<wtf>> = realm.query<wtf>().find().asFlow().map { it.list.toList() }
+    fun listFlow() : Flow<List<MarkerR>> = realm.query<MarkerR>().find().asFlow().map { it.list.toList() }
 
-    /*fun insertItem(text : String){
+    fun insertItem(title: String, description: String, date: String, lat: Double, lon: Double, category: String, image: ByteArray?){
+        val item = MarkerR(title = title, description = description, date = date, latitude = lat, longitude = lon, image = image, category = category, owner_id = userId)
+
         realm.writeBlocking {
-            val item = Itemm(summary = text, owner_id = userId)
+            println("$title, $lat, $lon")
             copyToRealm(item)
-        }
-    }*/
-    fun listFlow() : Flow<List<Item>> = realm.query<Item>().find().asFlow().map { it.list.toList() }
 
-    fun insertMarker(m : MarkerModel) {
-       realm.writeBlocking {
-            val marker = Item(
-                longitude = m.position.longitude,
-                latitude = m.position.latitude,
-                title = m.title,
-                description = m.description,
-                date = m.date,
-                category = m.category.toString(),
-                photoUri = m.photoUri.toString() ,
-                owner_id = userId)
-            copyToRealm(marker)
         }
-    }
+        /*Thread.sleep(1_500)
 
-    fun deleteItemById(itemId: io.realm.kotlin.types.ObjectId) {
         realm.writeBlocking {
-            val itemToDelete = realm.query<Item>().query("_id = $0", itemId).first()
+            val frog: MarkerR? = this.query<MarkerR>("_id == $0", item._id!!).first().find()
+            frog?.title = "update"
+        }*/
+    }
 
-            val liveItemToDelete = realm.findLatest(frozenItemToDelete)
+    fun updateItem(id : ObjectId, title: String, description: String, category: String, image: ByteArray?){
 
-            // Eliminar el objeto en vivo
-            liveItemToDelete?.deleteFromRealm()
-            delete(itemToDelete)
-            //itemToDelete?.deleteFromRealm()
+        realm.writeBlocking {
+            val frog: MarkerR? = this.query<MarkerR>("_id == $0", id).first().find()
+            frog?.title = title
+            frog?.description = description
+            frog?.category = category
+            frog?.image = image
         }
     }
 
-    fun delete(m : MarkerModel)
-    {
-        //val items = realm.query<Item>().find().toList()
-
-        CoroutineScope(Dispatchers.Default).launch {
-            m.id?.let { deleteItemById(it) }
-
-
-           // val result: RealmResults<Item> =
-                //realm.where(Item::class.java).equalTo("id", 5).findAll()
-            //result.deleteAllFromRealm()
-            //realm.write {
-            //    val itemToDelete = realm.query<Item>().query("_id = $0", m.id)
-             //   delete(itemToDelete)
-            //}
-
-
+    fun deleteItem(id: io.realm.kotlin.types.ObjectId){
+       realm.writeBlocking {
+            delete(query<MarkerR>("_id = $0", id).find())
         }
-
     }
 }

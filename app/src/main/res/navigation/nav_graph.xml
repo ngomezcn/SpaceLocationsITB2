@@ -48,6 +48,9 @@
         <action
             android:id="@+id/addmarker_to_map"
             app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/addmarker_to_detail"
+            app:destination="@id/DetailFragment" />
     </fragment>
 
     <fragment
@@ -66,6 +69,12 @@
         android:id="@+id/DetailFragment"
         android:name="com.example.spacelocations.fragments.DetailFragment"
         tools:layout="@layout/fragment_detail">
+        <action
+            android:id="@+id/detail_to_map"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/detail_to_addmarker"
+            app:destination="@id/AddMarkerFragment" />
     </fragment>
 
     <fragment
